@@ -281,6 +281,32 @@ update upat set izveshtaj = 'Skrshenica na zglob na leva noga pri sporuvanje',
 where id_upat = '6';
 commit;
 
+call vnesi_pacient('2905000410004','Stefan','Atanasovski',5);
+
+
+---------------Formi so proceduri----------
+select * from pacient;
+create or replace procedure vnesi_pacient(
+    m_broj char(13),
+    name varchar(50),
+    last_name varchar(50),
+    matichen integer
+)
+language plpgsql
+as $$
+    begin
+        insert into pacient
+        values (
+                count(pacient.id_pacient)+1,
+                m_broj,
+                name,
+                last_name,
+                matichen
+                );
+        commit;
+    end;$$
+
+
 
 
 
